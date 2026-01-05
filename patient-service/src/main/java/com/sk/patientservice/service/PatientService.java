@@ -2,6 +2,7 @@ package com.sk.patientservice.service;
 
 import com.sk.patientservice.dto.PatientRequestDto;
 import com.sk.patientservice.dto.PatientResponseDto;
+import com.sk.patientservice.exception.EmailAlreadyExistException;
 import com.sk.patientservice.exception.PatientNotFoundException;
 import com.sk.patientservice.mapper.PatientMapper;
 import com.sk.patientservice.model.Patient;
@@ -36,6 +37,11 @@ public class PatientService {
     }
 
     public PatientResponseDto createPatient(PatientRequestDto reqDto) {
+
+        if(patientRepository.existsByEmail(reqDto.getEmail())) {
+            throw new EmailAlreadyExistException("A patient with this email already exist.");
+        }
+
         Patient patient = PatientMapper.toModel(reqDto);
         Patient savedPatient = patientRepository.save(patient);
         return PatientMapper.toDto(savedPatient);
@@ -43,6 +49,9 @@ public class PatientService {
 
 
     public PatientResponseDto updatePatient(UUID id, PatientRequestDto reqDto) {
+        if(patientRepository.existsByEmail(reqDto.getEmail())) {
+            throw new EmailAlreadyExistException("A patient with this email already exist.");
+        }
 
         // find model by id...
         Patient model = patientRepository.findById(id)

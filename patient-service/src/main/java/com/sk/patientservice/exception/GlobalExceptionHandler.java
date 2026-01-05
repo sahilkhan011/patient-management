@@ -46,4 +46,16 @@ public class GlobalExceptionHandler {
                 .badRequest()
                 .body(res);
     }
+
+    @ExceptionHandler(EmailAlreadyExistException.class)
+    public ResponseEntity<Map<String, Object>> emailExistErrorHandler(
+            EmailAlreadyExistException ex) {
+
+        Map<String, Object> res = new HashMap<>();
+        res.put("status", HttpStatus.CONFLICT.value());
+        res.put("error", "Email Conflict");
+        res.put("message", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(res);
+    }
 }

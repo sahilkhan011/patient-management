@@ -2,7 +2,6 @@ package com.sk.patientservice.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -15,25 +14,20 @@ public class Patient {
     @Column(name = "id")
     private UUID id;
 
-    @NotNull
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
     @Email
-    @Column(name = "email",unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @NotNull
-    @Column(name = "address")
+    @Column(name = "address", nullable = false)
     private String address;
 
-    @NotNull
-    @Column(name = "date_of_birth")
+    @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
-    @NotNull
-    @Column(name = "registered_date")
+    @Column(name = "registered_date", nullable = false)
     private LocalDate registeredDate;
 
 
