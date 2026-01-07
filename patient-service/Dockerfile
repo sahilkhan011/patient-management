@@ -1,18 +1,28 @@
-FROM eclipse-temurin:21-jdk
+# ---------- BUILD STAGE ----------
+FROM maven:3.9.9-eclipse-temurin-21 AS builder
 
 WORKDIR /app
 
-# Copy the built jar
-COPY target/patient-service.jar app.jar
+# Copy pom first for dependency caching
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
 
-# Environment variables for Spring Boot and timezone
-ENV SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5000/patientdb
-ENV SPRING_DATASOURCE_USERNAME=admin
-ENV SPRING_DATASOURCE_PASSWORD=secret
+# Copy source and build
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Expose application port
+
+# ---------- RUNTIME STAGE ----------
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+
+# Copy only the built jar from builder
+COPY --from=builder /app/target/patient-service.jar app.jar
+
+# (Optional but recommended) JVM timezone
+#ENV TZ=Asia/Kolkata
+
 EXPOSE 8080
 
-# Run the application
 ENTRYPOINT ["java","-jar","/app/app.jar"]
-
