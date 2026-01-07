@@ -7,5 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, UUID> {
-    boolean existsByEmail(String Email);
+    // Checks if any patient exists with the given email
+    boolean existsByEmail(String email);
+    // Checks if any patient exists with the given email excluding the given patient ID (used during update)
+    boolean existsByEmailAndIdNot(String email, UUID id);
+
 }
