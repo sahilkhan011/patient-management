@@ -1,3 +1,3 @@
 ### Delete an entity
-DELETE http://localhost:8080/patients/123e4567-e89b-12d3-a456-426614174000
+DELETE http://localhost:8080/api/patients/938474a5-70ed-4216-b98c-dae1671b4d29
 ###
