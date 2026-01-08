@@ -26,3 +26,5 @@ COPY --from=builder /app/target/patient-service.jar app.jar
 EXPOSE 8080
 
 ENTRYPOINT ["java","-jar","/app/app.jar"]
+
+# docker build -t patient-service .
