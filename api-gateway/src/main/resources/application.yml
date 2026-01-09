@@ -1,0 +1,30 @@
+server:
+  port: 4000
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            # Route for /api/patients/** to patient-service
+            - id: patient-service-route
+              uri: http://patient-service:4001
+              #uri: http://localhost:4001
+              predicates:
+                - Path=/api/patients/**
+              #filters:
+              #  - strip-prefix=1
+
+              # REST CLIENT => http://localhost:4000/api/patients
+              # API GATEWAY => http://patient-service:4001/api/patients
+
+
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.web.reactive: DEBUG

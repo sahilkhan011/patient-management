@@ -7,6 +7,8 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
+#RUN mvn clean package -DskipTests
+
 # Copy source and build
 COPY src ./src
 RUN mvn clean package -DskipTests
@@ -21,7 +23,7 @@ WORKDIR /app
 COPY --from=builder /app/target/billing-service.jar app.jar
 
 # HTTP (Spring Boot)
-EXPOSE 4001
+EXPOSE 4002
 
 # gRPC
 EXPOSE 9001

@@ -9,4 +9,3 @@
 # Editor-based HTTP Client requests
 /httpRequests/
 docker-compose.yml
-/api-gateway

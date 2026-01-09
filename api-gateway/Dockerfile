@@ -18,10 +18,10 @@ FROM eclipse-temurin:21-jre AS runner
 WORKDIR /app
 
 # Copy correct JAR name
-COPY --from=builder /app/target/analytics-service.jar app.jar
+COPY --from=builder /app/target/api-gateway.jar app.jar
 
 # HTTP (Spring Boot)
-EXPOSE 4003
+EXPOSE 4000
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
 

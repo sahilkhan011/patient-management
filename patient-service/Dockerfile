@@ -6,6 +6,7 @@ WORKDIR /app
 # Copy pom first for dependency caching
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
+#RUN mvn clean package -DskipTests
 
 # Copy source and build
 COPY src ./src
@@ -23,7 +24,7 @@ COPY --from=builder /app/target/patient-service.jar app.jar
 # (Optional but recommended) JVM timezone
 #ENV TZ=Asia/Kolkata
 
-EXPOSE 8080
+EXPOSE 4001
 
 ENTRYPOINT ["java","-jar","/app/app.jar"]
 
